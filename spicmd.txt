@@ -1,0 +1,421 @@
+//Global AFE reset
+00011100000000000000000000000000  
+//Global AFE remove reset
+00100000000000000000000000000000
+//Global DAC on
+00100100000000000000000000000000
+//Global DAC off
+00110100000000000000000000000000
+
+// write STIM control
+00011000000000000000000000000000
+// read STIM control
+00001100000000000000000000000000
+
+// write REC control block 56 channel 2
+000100_0011100011_0000_100001000000
+// write REC control block 48 channel 3
+000100_0011000011_0000_000001111111
+// read REC control
+000001_0011100011_0000_000001000000
+000001_0011000011_0000_000000000000
+
+// write ELE MUX control
+010000_0011100000_0111011001010100
+010000_0011100000_1001111111100100
+
+010000_0011000000_0000000100100011
+// read ELE MUX control
+01000100111000000000000000000000
+01000100110000000000000000000000
+
+// write ADC SAMP rate 
+001110_00111000_000000000000000001
+// read ADC SAMP rate
+00111100000000000000000000000000
+00111100111000000000000000000000
+//read ADC data
+010011_0011100010_0000000000000000
+
+
+// write CB_OK
+000010_0011100001_0000_000000000000
+// read CB_OK
+00001100000000000000000000000000
+
+
+
+//TEST NL
+//模拟前端全局复位
+00011100000000000000000000000000
+//配置电极block 56
+010000_0011100000_0111011001010100
+010000_0011100000_0110011101010100
+//配置电极block 48
+010000_0011000000_0111011001010000
+010000_0011000000_1111011001010000
+
+//读电极block 56 配置
+01000100111000000000000000000000
+//读电极block 48 配置
+01000100110000000000000000000000
+//配置记录通道增益
+000100_0011100010_0000_000000000001
+//解除模拟前端全局复位
+00100000000000000000000000000000
+00100000000000000000000000000000
+//读ADC数据 block 56 channel 2
+010011_0011100010_0000000000000000
+//读ADC数据 block 48 channel 3
+010011_0011000011_0000000000000000
+
+//刺激器DAC parameter: OFF_STIM + CH[1:0] + AMP_X50 + comp_en + Pol[1:0] + STIM_AMP[8:0]
+//补偿
+000110_00111000_01_0011100100000000
+000110_00111000_01_0111100111111110  #
+000110_00111000_01_0101100100000000
+000110_00111000_01_0001100100000000
+000110_00110000_01_0111100111111110
+000110_00110000_00_0001100111111110
+//读CB_OK
+000011_0011100001_0000_000000000000
+000011_0011000001_0000_000000000000
+000011_0011100000_0000_000000000000
+
+//TEST
+000110_00000000_01_0111100111111110
+000011_0000000001_0000_000000000000
+
+
+
+
+//配置CB_OK为低,刺激开始
+010010_0011100011_0000_000000000000
+
+//BLOCK56-CH1-ELE3, stim negedge, AMP*0.5   62.5uA
+000110_00111000_01_0_110_0_01_111111110
+
+//BLOCK56-CH3-ELE?, stim 0, AMP*0.5   0uA
+000110_00111000_11_0_01_0_0_00_101000000
+
+//BLOCK56-CH3-ELE?, stim posedge, AMP*0.5   62.5uA
+000110_00111000_11_0_01_0_0_10_101000000
+
+//BLOCK48-CH0-ELE0, stim posedge, AMP*0.5   62.5uA
+000110_00110000_00_0_00_0_0_10_111111110
+
+
+//20240402 测试前端方案 SMA接16 
+//配置电极 block 48
+010000_0011000000_1111011001010000
+//读取电极配置 block 48
+01000100110000000000000000000000
+//解除模拟前端全局复位
+00100000000000000000000000000000
+//dummy
+00000000000000000000000000000000
+//读ADC数据 block 48 channel 0
+010011_0011000000_0000000000000000
+//set channel
+11000000
+
+
+
+
+
+
+//测试刺激器方案
+//补偿
+000110_00110000_00_0001100111111110
+//dummy
+00000000000000000000000000000000
+//关闭补偿
+000110_00110000_00_0001000111111110
+//dummy
+00000000000000000000000000000000
+//读CB_OK
+000011_0011000000_0000_000000000000
+// 配置CB_OK为低
+010010_0011000000_0000_000000000000
+
+
+//20240402 测试前端方案 SMA接16 
+//配置电极 block 48
+010000_0011000000_1111000001100001
+//读取电极配置 block 48
+01000100110000000000000000000000
+//解除模拟前端全局复位
+00100000000000000000000000000000
+//dummy
+00000000000000000000000000000000
+//读ADC数据 block 48 channel 0
+010011_0011000010_0000000000000000
+//set channel
+11000010
+
+
+//刺激器DAC ELE12
+    spi_cmd = "000110_00110000_01_0001100111111110"  
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************补偿************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_01_0000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000110_00110000_01_0001000111111110"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************关闭补偿***********\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_01_0000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "010010_0011000001_0000_000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************设置CBOK_LOW************\n",'custom_font')
+    time.sleep(0.1)
+
+    
+    spi_cmd = "000110_00110000_01_0_00_1_0_01_111111110"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************刺激************\n",'custom_font')
+    time.sleep(0.1)
+
+
+
+
+    //刺激器DAC ELE11
+    spi_cmd = "000110_00110000_01_0011100111111110"  
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************补偿************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_01_0000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000110_00110000_01_0011000111111110"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************关闭补偿***********\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_01_0000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    //刺激器DAC ELE13
+    spi_cmd = "000110_00110000_00_0111100111111110"  
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************补偿************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0110000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000110_00110000_00_0111000111111110"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************关闭补偿***********\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0110000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+
+    //刺激器DAC ELE14
+    spi_cmd = "000110_00110000_00_0101100111111110"  
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************补偿************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0100000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000110_00110000_00_0101000111111110"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************关闭补偿***********\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0100000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    //刺激器DAC ELE15
+    spi_cmd = "000110_00110000_00_0011100111111110"  
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************补偿************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0010000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000110_00110000_00_0011000111111110"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************关闭补偿***********\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0010000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+
+    //刺激器DAC ELE16
+    spi_cmd = "000110_00110000_00_0001100111111110"  
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************补偿************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+    spi_cmd = "000110_00110000_00_0001000111111110"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************关闭补偿***********\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "000011_00110000_00_0000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"*************读CBOK************\n",'custom_font')
+    time.sleep(0.1)
+
+    spi_cmd = "00000000000000000000000000000000"
+    single_TCP(spi_cmd,console_output)
+    console_output.insert(tk.END, f"dummy\n")
+    time.sleep(0.1)
+
+
+
+
+
+
+
+
+
+
+
+    channel:
+
+    01110000
+
+
+
+spi_cmd = "000110_00111100_00_0_00_1100_111111110"  
+000110_00111100_00_0_00_1011_111111110
+
+011011_00111100_11_0_00_1011_111111110
+011100_00111100_11_0_00_1011_111111110
+2025/0702 mea
+
+
+刺激成功输出 ELE1电极
+命令
+000110_00111100_11_0_00_1011_111111110
+
+
+
+
+单次正刺激：000110_00111100_11_0_00_1_0_10_111111110 Positive voltage
+
