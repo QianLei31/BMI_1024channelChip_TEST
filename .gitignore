@@ -1,0 +1,69 @@
+# Build directories
+build-new/
+build_release/
+build/
+out/
+cmake-build-*/
+
+# Compiled binaries and DLLs
+*.dll
+*.exe
+*.lib
+*.a
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exp
+
+# Qt deployment
+NL_CommandCenter_v2_qt/*.dll
+NL_CommandCenter_v2_qt/generic/
+NL_CommandCenter_v2_qt/imageformats/
+NL_CommandCenter_v2_qt/platforms/
+NL_CommandCenter_v2_qt/styles/
+NL_CommandCenter_v2_qt/tls/
+NL_CommandCenter_v2_qt/Qt6*.dll
+NL_CommandCenter_v2_qt/opengl32sw.dll
+
+# ChipSeeker (separate repo, use submodule if needed)
+ChipSeeker/
+ChipSeeker_Release/
+ChipSeeker_v0.0.1.zip
+
+# Vivado
+*.jou
+*.log
+*.runs/
+*.hw/
+*.ip_user_files/
+
+# CMake generated
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+DartConfiguration.tcl
+
+# Generated output files (keep source, not output)
+bci_spike_10Hz_1s_16bit.wav
+bci_spike_10Hz_1s_24bit.wav
+bci_spike_10Hz_1s.csv
+bci_spike_waveform_plot.png
+spike_10Hz_1s.wav
+spike_waveform_preview.png
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Claude
+.claude/
