@@ -1,0 +1,45 @@
+{
+  "fs_Hz": 96000,
+  "duration_s": 10.0,
+  "digital_wav_format": "mono 24-bit PCM WAV, peak-normalized to \u00b10.98 FS",
+  "intended_use": "APx555/APx500 arbitrary waveform playback or local simulation",
+  "physical_targets_before_normalization": {
+    "LFP_uv_rms_approx": 250.0,
+    "AP_negative_peak_uv_approx": 100.0,
+    "spike_firing_rate_Hz_nominal": 20,
+    "spike_count_generated": 213
+  },
+  "scaling_note": "The WAV files are normalized for waveform fidelity. In APx500, set Generator Level and then verify the actual output using loopback or oscilloscope. CSV files contain physical microvolt-scale values for reference.",
+  "files": {
+    "AP_only": {
+      "wav": "AP_only_96k_10s_peak98FS_24bit.wav",
+      "csv_normalized": "AP_only_normalized_96k_10s.csv",
+      "csv_physical_uV": "AP_only_physical_uV_96k_10s.csv",
+      "physical_peak_uV": 149.24483515094013,
+      "physical_rms_uV": 11.180964801780673,
+      "wav_peak_FS": 0.98,
+      "wav_rms_FS": 0.07341859096606759,
+      "apx_level_hint_if_using_peak_mode": "If this normalized file is generated with APx Generator Level in Vp, approximate output peak equals Generator_Level_Vp * wav_peak_FS."
+    },
+    "LFP_only": {
+      "wav": "LFP_only_96k_10s_peak98FS_24bit.wav",
+      "csv_normalized": "LFP_only_normalized_96k_10s.csv",
+      "csv_physical_uV": "LFP_only_physical_uV_96k_10s.csv",
+      "physical_peak_uV": 757.8383719985919,
+      "physical_rms_uV": 184.6767438461446,
+      "wav_peak_FS": 0.98,
+      "wav_rms_FS": 0.23881505035424358,
+      "apx_level_hint_if_using_peak_mode": "If this normalized file is generated with APx Generator Level in Vp, approximate output peak equals Generator_Level_Vp * wav_peak_FS."
+    },
+    "AP_plus_LFP": {
+      "wav": "AP_plus_LFP_96k_10s_peak98FS_24bit.wav",
+      "csv_normalized": "AP_plus_LFP_normalized_96k_10s.csv",
+      "csv_physical_uV": "AP_plus_LFP_physical_uV_96k_10s.csv",
+      "physical_peak_uV": 759.4050728966678,
+      "physical_rms_uV": 185.00546097908654,
+      "wav_peak_FS": 0.98,
+      "wav_rms_FS": 0.2387465638963081,
+      "apx_level_hint_if_using_peak_mode": "If this normalized file is generated with APx Generator Level in Vp, approximate output peak equals Generator_Level_Vp * wav_peak_FS."
+    }
+  }
+}
